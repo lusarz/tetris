@@ -1,4 +1,4 @@
-package com.softarea;
+package com.softarea.tetris;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

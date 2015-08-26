@@ -35,7 +35,7 @@
                             <goal>java</goal>
                         </goals>
                         <configuration>
-                            <mainClass>com.softarea.App</mainClass>
+                            <mainClass>com.softarea.tetris.App</mainClass>
                         </configuration>
                     </execution>
                 </executions>

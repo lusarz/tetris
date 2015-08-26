@@ -1,4 +1,4 @@
-package com.softarea;
+package com.softarea.tetris;
 
 import javax.swing.*;
 import java.awt.*;
