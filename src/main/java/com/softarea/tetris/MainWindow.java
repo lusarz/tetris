@@ -18,6 +18,7 @@ public class MainWindow extends JFrame {
     private void initApplicationContext() {
         context = ApplicationContext.getInstance();
         context.setTranslation(new TranslationsFactory().getTranslation("pl"));
+        context.setMainWindow(this);
     }
 
 

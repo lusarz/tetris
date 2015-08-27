@@ -19,6 +19,7 @@ public class PolishTranslation extends Translation {
         addTranslation("menu.game.description", "Menu zarządzania rozgrywką");
         addTranslation("menu.statistics.title", "Statystyki");
         addTranslation("menu.newGame.title", "Nowa gra");
+        addTranslation("menu.game.exit", "Wyjdź");
 
         /*Menu view**/
         addTranslation("menu.view.title", "Widok");
