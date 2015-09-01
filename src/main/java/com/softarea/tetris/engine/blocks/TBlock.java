@@ -1,4 +1,15 @@
 package com.softarea.tetris.engine.blocks;
 
-public class TBlock implements Block {
+public class TBlock extends Block {
+    private static final boolean[][][] ROTATES = new boolean[0][][];
+
+    @Override
+    public boolean[][][] getRotates() {
+        return ROTATES;
+    }
+
+    @Override
+    public int getRotatesLength() {
+        return ROTATES.length;
+    }
 }

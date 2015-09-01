@@ -1,42 +1,44 @@
 package com.softarea.tetris.engine.board;
 
-import com.softarea.tetris.drawing.DrawingApi;
+import com.softarea.tetris.engine.driver.GameDriver;
 
 public class Board {
     static int DEFAULT_WIDTH = 10;
     static int DEFAULT_HEIGHT = 20;
 
-    private int width;
-    private int height;
+    int width;
+    int height;
 
-
-    DrawingApi drawingApi;
-
-    boolean[][] actualBlock;
-
-    int actualBlockPositionX;
-    int actualBlockPositionY;
-
+    GameDriver gameDriver;
 
     boolean[][] gameCells;
 
-    //private Block actualBlock = null;
-    //private List<BoardRow> rows = new ArrayList<BoardRow>();
 
-
-    public Board(int width, int height, DrawingApi drawingApi) {
+    public Board(int width, int height, GameDriver gameDriver) {
         this.width = width;
         this.height = height;
-        this.drawingApi = drawingApi;
+        this.gameDriver = gameDriver;
         gameCells = new boolean[width][height];
     }
 
-    public Board(DrawingApi drawingApi) {
-        this(DEFAULT_WIDTH, DEFAULT_HEIGHT, drawingApi);
+    public Board(GameDriver gameDriver) {
+        this(DEFAULT_WIDTH, DEFAULT_HEIGHT, gameDriver);
     }
 
 
-    public void draw() {
-        drawingApi.drawBoard(this);
+    public void saveBlock(BlockOnBoard actualBlock) {
+    }
+
+
+    public boolean checkCollision(BlockOnBoard actualBlock) {
+        return false;
+    }
+
+    public boolean isGameOver() {
+        return false;
+    }
+
+    public int clearFullLines() {
+        return 0;
     }
 }

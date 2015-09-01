@@ -1,6 +1,6 @@
 package com.softarea.tetris.engine.blocks;
 
-public class SBlock extends Block {
+public class ZBlock extends Block {
     private static final boolean[][][] ROTATES = new boolean[0][][];
 
     @Override

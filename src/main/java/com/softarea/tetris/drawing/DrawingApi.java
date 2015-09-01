@@ -1,7 +1,8 @@
 package com.softarea.tetris.drawing;
 
+import com.softarea.tetris.engine.board.BlockOnBoard;
 import com.softarea.tetris.engine.board.Board;
 
 public interface DrawingApi {
-    void drawBoard(Board board);
+    void drawBoard(BlockOnBoard actualBlock, Board board);
 }

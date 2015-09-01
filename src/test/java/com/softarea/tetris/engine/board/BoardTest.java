@@ -19,4 +19,8 @@ public class BoardTest extends TestCase {
         }
         assertTrue(emptyCells);
     }
+
+    public void testStartNewBlock() {
+        
+    }
 }
