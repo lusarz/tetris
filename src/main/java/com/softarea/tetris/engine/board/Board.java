@@ -1,7 +1,5 @@
 package com.softarea.tetris.engine.board;
 
-import com.softarea.tetris.engine.driver.GameDriver;
-
 public class Board {
     static int DEFAULT_WIDTH = 10;
     static int DEFAULT_HEIGHT = 20;
@@ -9,36 +7,38 @@ public class Board {
     int width;
     int height;
 
-    GameDriver gameDriver;
 
     boolean[][] gameCells;
 
 
-    public Board(int width, int height, GameDriver gameDriver) {
+    public Board(int width, int height) {
         this.width = width;
         this.height = height;
-        this.gameDriver = gameDriver;
         gameCells = new boolean[width][height];
     }
 
-    public Board(GameDriver gameDriver) {
-        this(DEFAULT_WIDTH, DEFAULT_HEIGHT, gameDriver);
+    public Board() {
+        this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
 
-    public void saveBlock(BlockOnBoard actualBlock) {
+    public void saveBlock(int x, int y, boolean[][] block) {
+        //TODO: implement this
     }
 
 
-    public boolean checkCollision(BlockOnBoard actualBlock) {
+    public boolean hasCollision(int x, int y, boolean[][] block) {
+        //TODO: implement this
         return false;
     }
 
-    public boolean isGameOver() {
+    public boolean checkGameOver() {
+        //TODO: implement this
         return false;
     }
 
-    public int clearFullLines() {
+    public int removeFullLines() {
+        //TODO: implement this
         return 0;
     }
 }
