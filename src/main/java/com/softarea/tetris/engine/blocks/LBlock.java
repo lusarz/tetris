@@ -1,50 +1,44 @@
 package com.softarea.tetris.engine.blocks;
 
 public class LBlock extends Block {
-    private static final boolean[][][] ROTATES = new boolean[][][]{
+    private static final int[][][] ROTATES = new int[][][]{
             {
-                    {false, false, true, false},
-                    {false, false, true, false},
-                    {false, true, true, false},
-                    {false, false, false, false}
+                    {0, 1},
+                    {0, 1},
+                    {1, 1}
             },
             {
-                    {false, false, false, false},
-                    {false, true, false, false},
-                    {false, true, true, true},
-                    {false, false, false, false}
+                    {1, 0, 0},
+                    {1, 1, 1}
             },
             {
-                    {false, false, true, true},
-                    {false, false, true, false},
-                    {false, false, true, false},
-                    {false, false, false, false}
+                    {1, 1},
+                    {1, 0},
+                    {1, 0}
             },
             {
-                    {false, false, false, false},
-                    {false, true, true, true},
-                    {false, true, false, false},
-                    {false, false, false, false}
+                    {1, 1, 1},
+                    {1, 0, 0}
             }
     };
 
     @Override
-    public boolean[][] get0Rotation() {
+    public int[][] get0Rotation() {
         return ROTATES[0];
     }
 
     @Override
-    public boolean[][] get90Rotation() {
+    public int[][] get90Rotation() {
         return ROTATES[0];
     }
 
     @Override
-    public boolean[][] get180Rotation() {
+    public int[][] get180Rotation() {
         return ROTATES[0];
     }
 
     @Override
-    public boolean[][] get270Rotation() {
+    public int[][] get270Rotation() {
         return ROTATES[0];
     }
 }

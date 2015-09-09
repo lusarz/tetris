@@ -1,25 +1,25 @@
 package com.softarea.tetris.engine.blocks;
 
 public class SquareBlock extends Block {
-    private static final boolean[][][] ROTATES = new boolean[0][][];
+    private static final int[][][] ROTATES = new int[0][][];
 
     @Override
-    public boolean[][] get0Rotation() {
+    public int[][] get0Rotation() {
         return ROTATES[0];
     }
 
     @Override
-    public boolean[][] get90Rotation() {
+    public int[][] get90Rotation() {
         return ROTATES[0];
     }
 
     @Override
-    public boolean[][] get180Rotation() {
+    public int[][] get180Rotation() {
         return ROTATES[0];
     }
 
     @Override
-    public boolean[][] get270Rotation() {
+    public int[][] get270Rotation() {
         return ROTATES[0];
     }
 }

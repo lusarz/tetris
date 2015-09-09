@@ -1,11 +1,30 @@
 package com.softarea.tetris.engine.blocks;
 
+import com.softarea.tetris.engine.blocks.support.Position;
+
 public abstract class Block {
 
+    private int actualRotation = 0;
 
-    public static final int DEFAULT_SIZE = 4;
+    private Position topLeftPosition;
 
-    public int actualRotation = 0;
+    private Position potentialTopLeftPosition;
+
+    public Position getTopLeftPosition() {
+        return topLeftPosition;
+    }
+
+    public void setTopLeftPosition(Position topLeftPosition) {
+        this.topLeftPosition = topLeftPosition;
+    }
+
+    public Position getPotentialTopLeftPosition() {
+        return potentialTopLeftPosition;
+    }
+
+    public void setPotentialTopLeftPosition(Position potentialTopLeftPosition) {
+        this.potentialTopLeftPosition = potentialTopLeftPosition;
+    }
 
     public void rotateRight() {
         if (actualRotation == 3) {
@@ -23,7 +42,7 @@ public abstract class Block {
         }
     }
 
-    public boolean[][] getActualRotation() {
+    public int[][] cellsForCurrentRotation() {
         switch (actualRotation) {
             case 1:
                 return get0Rotation();
@@ -38,11 +57,11 @@ public abstract class Block {
         }
     }
 
-    public abstract boolean[][] get0Rotation();
+    public abstract int[][] get0Rotation();
 
-    public abstract boolean[][] get90Rotation();
+    public abstract int[][] get90Rotation();
 
-    public abstract boolean[][] get180Rotation();
+    public abstract int[][] get180Rotation();
 
-    public abstract boolean[][] get270Rotation();
+    public abstract int[][] get270Rotation();
 }
