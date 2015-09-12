@@ -2,6 +2,9 @@ package com.softarea.tetris.engine.board;
 
 import com.softarea.tetris.engine.blocks.Block;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
     private static int DEFAULT_WIDTH = 10;
     private static int DEFAULT_HEIGHT = 20;
@@ -9,13 +12,17 @@ public class Board {
     private int width;
     private int height;
 
-    private int[][] blocks;
+    private List<int[]> blocks;
 
 
     public Board(int width, int height) {
         this.width = width;
         this.height = height;
-        blocks = new int[width][height];
+
+        blocks = new ArrayList<int[]>();
+        for (int i = 0; i < height; i++) {
+            blocks.add(new int[width]);
+        }
     }
 
     public Board() {
@@ -68,7 +75,8 @@ public class Board {
     }
 
     private void removeLine(int lineNumber) {
-        //TODO: implement this
+        blocks.remove(lineNumber);
+        blocks.add(0, new int[getWidth()]);
     }
 
     private boolean isLineFull(int lineNumber) {
@@ -92,11 +100,12 @@ public class Board {
     }
 
     private int getField(int x, int y) {
-        return blocks[x][y];
+
+        return blocks.get(y)[x];
     }
 
     private void setField(int x, int y, int value) {
-        blocks[x][y] = value;
+        blocks.get(y)[x] = value;
     }
 
 
