@@ -1,6 +1,6 @@
 package com.softarea.tetris.engine.blocks;
 
-public class LMirroredBlock extends Block {
+public class LMirroredBlock extends AbstractBlock {
     private static final int[][][] ROTATES = new int[0][][];
 
     @Override

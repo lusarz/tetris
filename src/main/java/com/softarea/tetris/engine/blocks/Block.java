@@ -1,67 +1,33 @@
 package com.softarea.tetris.engine.blocks;
 
-import com.softarea.tetris.engine.blocks.support.Position;
+public interface Block {
+    void rotateRight();
 
-public abstract class Block {
+    void rotateLeft();
 
-    private int actualRotation = 0;
+    int getWidth();
 
-    private Position topLeftPosition;
+    int getHeight();
 
-    private Position potentialTopLeftPosition;
+    int getField(int x, int y);
 
-    public Position getTopLeftPosition() {
-        return topLeftPosition;
-    }
+    int getX();
 
-    public void setTopLeftPosition(Position topLeftPosition) {
-        this.topLeftPosition = topLeftPosition;
-    }
+    int getY();
 
-    public Position getPotentialTopLeftPosition() {
-        return potentialTopLeftPosition;
-    }
+    BlockMemento save();
 
-    public void setPotentialTopLeftPosition(Position potentialTopLeftPosition) {
-        this.potentialTopLeftPosition = potentialTopLeftPosition;
-    }
+    void undo(BlockMemento memento);
 
-    public void rotateRight() {
-        if (actualRotation == 3) {
-            actualRotation = 0;
-        } else {
-            actualRotation++;
+    class BlockMemento {
+        protected int x;
+        protected int y;
+        protected int actualRotation;
+
+        public BlockMemento(int x, int y, int actualRotation) {
+            this.x = x;
+            this.y = y;
+            this.actualRotation = actualRotation;
         }
     }
-
-    public void rotateLeft() {
-        if (actualRotation == 0) {
-            actualRotation = 3;
-        } else {
-            actualRotation--;
-        }
-    }
-
-    public int[][] cellsForCurrentRotation() {
-        switch (actualRotation) {
-            case 1:
-                return get0Rotation();
-            case 2:
-                return get90Rotation();
-            case 3:
-                return get180Rotation();
-            case 4:
-                return get270Rotation();
-            default:
-                return get0Rotation();
-        }
-    }
-
-    public abstract int[][] get0Rotation();
-
-    public abstract int[][] get90Rotation();
-
-    public abstract int[][] get180Rotation();
-
-    public abstract int[][] get270Rotation();
 }

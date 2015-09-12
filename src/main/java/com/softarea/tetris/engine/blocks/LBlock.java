@@ -1,6 +1,8 @@
 package com.softarea.tetris.engine.blocks;
 
-public class LBlock extends Block {
+public class LBlock extends AbstractBlock {
+
+
     private static final int[][][] ROTATES = new int[][][]{
             {
                     {0, 1},

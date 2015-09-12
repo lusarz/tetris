@@ -1,6 +1,6 @@
 package com.softarea.tetris.engine.blocks;
 
-public class ZBlock extends Block {
+public class ZBlock extends AbstractBlock {
     private static final int[][][] ROTATES = new int[0][][];
 
     @Override
