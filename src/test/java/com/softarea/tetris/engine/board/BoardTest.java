@@ -28,7 +28,7 @@ public class BoardTest extends TestCase {
     }
 
 
-    public void testCheckCollision() {
+    public void testCheckCollision() throws Exception {
         when(blockMock.getY()).thenReturn(10);
 
         when(blockMock.getX()).thenReturn(-1);
@@ -48,6 +48,10 @@ public class BoardTest extends TestCase {
 
         when(blockMock.getY()).thenReturn(board.getHeight() - TEST_BLOCK_HEIGHT);
         assertFalse(board.checkCollision(blockMock));
+
+        /*Board boardMock = mock(Board.class);
+        when((boardMock.getField(anyInt(), anyInt()))).thenReturn(1);
+        assertTrue(boardMock.checkCollision(blockMock));*/
     }
 
 

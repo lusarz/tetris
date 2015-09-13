@@ -34,6 +34,39 @@ public class Board {
         return (checkBorderCollision(block) || checkPointsCollision(block));
     }
 
+
+    public void saveBlock(Block block) {
+        for (int i = 0; i < block.getWidth(); i++) {
+            for (int j = 0; j < block.getHeight(); j++) {
+                setField(block.getX() + i, block.getY() + j, block.getField(i, j));
+            }
+        }
+    }
+
+    public int removeFullLines() {
+        int linesCount = 0;
+
+        for (int j = 0; j < height; j++) {
+            if (isLineFull(j)) {
+                linesCount++;
+                removeLine(j);
+            }
+        }
+        return linesCount;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getField(int x, int y) {
+        return blocks.get(y)[x];
+    }
+
     private boolean checkBorderCollision(Block block) {
         boolean isLeftCollision = (block.getX() < 0);
         boolean isRightCollision = (block.getX() + block.getWidth() > width);
@@ -56,26 +89,6 @@ public class Board {
         return false;
     }
 
-    public void saveBlock(Block block) {
-        for (int i = 0; i < block.getWidth(); i++) {
-            for (int j = 0; j < block.getHeight(); j++) {
-                setField(block.getX() + i, block.getY() + j, block.getField(i, j));
-            }
-        }
-    }
-
-    public int removeFullLines() {
-        int linesCount = 0;
-
-        for (int j = 0; j < height; j++) {
-            if (isLineFull(j)) {
-                linesCount++;
-                removeLine(j);
-            }
-        }
-        return linesCount;
-    }
-
     private void removeLine(int lineNumber) {
         blocks.remove(lineNumber);
         blocks.add(0, new int[getWidth()]);
@@ -91,19 +104,6 @@ public class Board {
             }
         }
         return lineFull;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    private int getField(int x, int y) {
-
-        return blocks.get(y)[x];
     }
 
     private void setField(int x, int y, int value) {
