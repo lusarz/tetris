@@ -31,23 +31,25 @@ public class Board {
 
 
     public boolean checkCollision(Block block) {
-        int blockHeight = block.getHeight();
-        int blockWidth = block.getWidth();
-        int blockX = block.getX();
-        int blockY = block.getY();
+        return (checkBorderCollision(block) || checkPointsCollision(block));
+    }
 
+    private boolean checkBorderCollision(Block block) {
+        boolean isLeftCollision = (block.getX() < 0);
+        boolean isRightCollision = (block.getX() + block.getWidth() > width);
+        boolean isDownCollision = (block.getY() + block.getHeight() > height);
 
-        if ((blockX < 0) || (blockX + blockWidth > width) || blockY + blockHeight > height) {
-            return true;
-        } else {
-            for (int i = 0; i < blockWidth; i++) {
-                for (int j = 0; j < blockHeight; j++) {
-                    int blockValue = block.getField(i, j);
-                    int boardValue = getField(blockX + i, blockY + j);
+        return (isLeftCollision || isRightCollision || isDownCollision);
+    }
 
-                    if ((blockValue > 0) && (boardValue > 0)) {
-                        return true;
-                    }
+    private boolean checkPointsCollision(Block block) {
+        for (int i = 0; i < block.getWidth(); i++) {
+            for (int j = 0; j < block.getHeight(); j++) {
+                int blockValue = block.getField(i, j);
+                int boardValue = getField(block.getX() + i, block.getY() + j);
+
+                if ((blockValue > 0) && (boardValue > 0)) {
+                    return true;
                 }
             }
         }
