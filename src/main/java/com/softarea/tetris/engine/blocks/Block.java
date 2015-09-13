@@ -1,6 +1,12 @@
 package com.softarea.tetris.engine.blocks;
 
 public interface Block {
+    void moveDown();
+
+    void moveLeft();
+
+    void moveRight();
+    
     void rotateRight();
 
     void rotateLeft();

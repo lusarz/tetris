@@ -11,6 +11,7 @@ public class BoardTest extends TestCase {
     private int TEST_BLOCK_WIDTH = 3;
     private int TEST_BLOCK_HEIGHT = 2;
 
+
     Block blockMock;
     Board board;
     int boardWidth;
@@ -49,9 +50,9 @@ public class BoardTest extends TestCase {
         when(blockMock.getY()).thenReturn(board.getHeight() - TEST_BLOCK_HEIGHT);
         assertFalse(board.checkCollision(blockMock));
 
-        /*Board boardMock = mock(Board.class);
-        when((boardMock.getField(anyInt(), anyInt()))).thenReturn(1);
-        assertTrue(boardMock.checkCollision(blockMock));*/
+
+        board.saveBlock(blockMock);
+        assertTrue(board.checkCollision(blockMock));
     }
 
 
