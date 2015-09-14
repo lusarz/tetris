@@ -8,7 +8,7 @@ public abstract class AbstractBlock implements Block {
     private int x;
 
     //Block top left y position
-    private int y = -4;
+    private int y = 0;
 
 
     public void rotateRight() {
@@ -50,23 +50,24 @@ public abstract class AbstractBlock implements Block {
     }
 
     public int getWidth() {
-        return 0;
+        return cellsForCurrentRotation().length;
     }
 
     public int getHeight() {
-        return 0;
+        return cellsForCurrentRotation()[0].length;
     }
 
     public int getField(int x, int y) {
-        return 0;
+        int[][] cells = cellsForCurrentRotation();
+        return cells[x][y];
     }
 
     public int getX() {
-        return 0;
+        return x;
     }
 
     public int getY() {
-        return 0;
+        return y;
     }
 
     public int[][] cellsForCurrentRotation() {

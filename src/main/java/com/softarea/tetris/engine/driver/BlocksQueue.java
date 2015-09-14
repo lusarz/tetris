@@ -21,6 +21,7 @@ public class BlocksQueue {
     }
 
     public BlocksQueue() {
+        fill();
     }
 
     private void fill() {

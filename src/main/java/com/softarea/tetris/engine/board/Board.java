@@ -79,6 +79,8 @@ public class Board {
         for (int i = 0; i < block.getWidth(); i++) {
             for (int j = 0; j < block.getHeight(); j++) {
                 int blockValue = block.getField(i, j);
+
+
                 int boardValue = getField(block.getX() + i, block.getY() + j);
 
                 if ((blockValue > 0) && (boardValue > 0)) {

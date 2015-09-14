@@ -15,6 +15,25 @@ public class GameController {
     private DrawingApi drawingApi;
 
 
+    public void init(DrawingApi drawingApi) {
+        board = new Board();
+        queue = new BlocksQueue();
+        block = queue.getNextElement();
+
+        this.drawingApi = drawingApi;
+
+        Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
+            public void uncaughtException(Thread th, Throwable ex) {
+                System.out.println("Uncaught exception: ");
+                ex.printStackTrace();
+            }
+        };
+
+        Thread thread = new Thread(new PlayLoop());
+        thread.setUncaughtExceptionHandler(h);
+        thread.start();
+    }
+
     public boolean moveDownOrSave() {
         Block.BlockMemento memento = block.save();
         block.moveDown();
@@ -22,6 +41,8 @@ public class GameController {
             block.undo(memento);
             board.saveBlock(block);
             return true;
+        } else {
+            drawingApi.drawGame(block, board);
         }
         return false;
     }
@@ -44,27 +65,38 @@ public class GameController {
     }
 
 
-    public void playLoop() throws InterruptedException {
-        while (true) {
-            block = queue.getNextElement();
+    public void playLoop() {
 
-            while (true) {
-                Thread.sleep(1000);
-                boolean saved = moveDownOrSave();
-                if (saved) {
-                    int lines = board.removeFullLines();
-                    addPoints(lines);
-                    break;
-                }
-            }
-            if (board.isGameOver()) {
-                break;
-            }
-        }
     }
 
     private void addPoints(int lines) {
 
+    }
+
+    private class PlayLoop implements Runnable {
+
+        public void run() {
+            while (true) {
+                block = queue.getNextElement();
+
+                while (true) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                    }
+
+                    boolean saved = moveDownOrSave();
+                    if (saved) {
+                        int lines = board.removeFullLines();
+                        addPoints(lines);
+                        break;
+                    }
+                }
+                if (board.isGameOver()) {
+                    break;
+                }
+            }
+        }
     }
 
 }
