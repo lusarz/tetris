@@ -67,6 +67,9 @@ public class Board {
     }
 
     public int getField(int x, int y) {
+        if (y < 0) {
+            return 0;
+        }
         return blocks.get(y)[x];
     }
 

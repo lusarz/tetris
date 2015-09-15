@@ -52,7 +52,7 @@ public class BoardPanel extends JPanel implements DrawingApi {
     }
 
     protected void paintBlockPoint(int i, int j) {
-        if (block.getField(i, j) != 0) {
+        if (block.getField(i, j) != 0 && block.getY() + j >= 0) {
             graphics2d.fillRect(OFFSET + (block.getX() + i) * SINGLE_BLOCK_SIZE, OFFSET + (block.getY() + j) * SINGLE_BLOCK_SIZE,
                     SINGLE_BLOCK_SIZE, SINGLE_BLOCK_SIZE);
         }

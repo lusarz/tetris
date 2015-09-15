@@ -8,7 +8,7 @@ public abstract class AbstractBlock implements Block {
     private int x;
 
     //Block top left y position
-    private int y = 0;
+    private int y = -4;
 
 
     public void rotateRight() {
