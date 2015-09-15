@@ -1,7 +1,17 @@
 package com.softarea.tetris.engine.blocks;
 
-public class SBlock extends AbstractBlock {
-    private static final int[][][] ROTATES = new int[0][][];
+public final class SBlock extends AbstractBlock {
+    private static final int[][][] ROTATES = new int[][][]{
+            {
+                    {1, 0},
+                    {1, 1},
+                    {0, 1}
+            },
+            {
+                    {0, 1, 1},
+                    {1, 1, 0}
+            }
+    };
 
     @Override
     public int[][] get0Rotation() {
@@ -10,7 +20,7 @@ public class SBlock extends AbstractBlock {
 
     @Override
     public int[][] get90Rotation() {
-        return ROTATES[0];
+        return ROTATES[1];
     }
 
     @Override
@@ -20,6 +30,6 @@ public class SBlock extends AbstractBlock {
 
     @Override
     public int[][] get270Rotation() {
-        return ROTATES[0];
+        return ROTATES[1];
     }
 }

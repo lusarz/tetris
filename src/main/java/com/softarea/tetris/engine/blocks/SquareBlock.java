@@ -1,7 +1,12 @@
 package com.softarea.tetris.engine.blocks;
 
-public class SquareBlock extends AbstractBlock {
-    private static final int[][][] ROTATES = new int[0][][];
+public final class SquareBlock extends AbstractBlock {
+    private static final int[][][] ROTATES = new int[][][]{
+            {
+                    {1, 1},
+                    {1, 1}
+            }
+    };
 
     @Override
     public int[][] get0Rotation() {
