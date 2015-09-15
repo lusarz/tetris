@@ -3,6 +3,7 @@ package com.softarea.tetris.engine.driver;
 import com.softarea.tetris.drawing.DrawingApi;
 import com.softarea.tetris.engine.blocks.Block;
 import com.softarea.tetris.engine.board.Board;
+import com.softarea.tetris.statistics.Statistics;
 
 public class GameController {
 
@@ -14,6 +15,12 @@ public class GameController {
 
     private DrawingApi drawingApi;
 
+    private Statistics statistics;
+
+
+    public void setStatistics(Statistics statistics) {
+        this.statistics = statistics;
+    }
 
     public void init(DrawingApi drawingApi) {
         board = new Board();
@@ -42,25 +49,48 @@ public class GameController {
             board.saveBlock(block);
             return true;
         } else {
-            drawingApi.drawGame(block, board);
+            drawGame();
         }
         return false;
+    }
+
+    private void drawGame() {
+        drawingApi.drawGame(block, board);
     }
 
     public void tryMoveRight() {
         Block.BlockMemento memento = block.save();
         block.moveRight();
-        if (board.checkCollision(block)) {
-            block.undo(memento);
-        }
+        redrawOrUndoIfCollide(memento);
     }
+
 
     public void tryMoveLeft() {
         Block.BlockMemento memento = block.save();
 
         block.moveLeft();
+        redrawOrUndoIfCollide(memento);
+    }
+
+    public void tryRotateLeft() {
+        Block.BlockMemento memento = block.save();
+
+        block.rotateLeft();
+        redrawOrUndoIfCollide(memento);
+    }
+
+    public void tryRotateRight() {
+        Block.BlockMemento memento = block.save();
+
+        block.rotateRight();
+        redrawOrUndoIfCollide(memento);
+    }
+
+    private void redrawOrUndoIfCollide(Block.BlockMemento memento) {
         if (board.checkCollision(block)) {
             block.undo(memento);
+        } else {
+            drawGame();
         }
     }
 
@@ -70,7 +100,7 @@ public class GameController {
     }
 
     private void addPoints(int lines) {
-
+        statistics.addPoints(lines);
     }
 
     private class PlayLoop implements Runnable {
@@ -88,7 +118,9 @@ public class GameController {
                     boolean saved = moveDownOrSave();
                     if (saved) {
                         int lines = board.removeFullLines();
-                        addPoints(lines);
+                        if (lines > 0) {
+                            addPoints(lines);
+                        }
                         break;
                     }
                 }

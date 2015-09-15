@@ -38,7 +38,10 @@ public class Board {
     public void saveBlock(Block block) {
         for (int i = 0; i < block.getWidth(); i++) {
             for (int j = 0; j < block.getHeight(); j++) {
-                setField(block.getX() + i, block.getY() + j, block.getField(i, j));
+                int value = block.getField(i, j);
+                if (value != 0) {
+                    setField(block.getX() + i, block.getY() + j, value);
+                }
             }
         }
     }

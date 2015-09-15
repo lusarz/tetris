@@ -20,7 +20,7 @@ public class LBlock extends AbstractBlock {
             },
             {
                     {1, 1, 1},
-                    {1, 0, 0}
+                    {0, 0, 1}
             }
     };
 
@@ -31,16 +31,16 @@ public class LBlock extends AbstractBlock {
 
     @Override
     public int[][] get90Rotation() {
-        return ROTATES[0];
+        return ROTATES[1];
     }
 
     @Override
     public int[][] get180Rotation() {
-        return ROTATES[0];
+        return ROTATES[2];
     }
 
     @Override
     public int[][] get270Rotation() {
-        return ROTATES[0];
+        return ROTATES[3];
     }
 }

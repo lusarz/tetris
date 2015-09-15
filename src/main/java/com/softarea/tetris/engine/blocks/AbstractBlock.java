@@ -72,13 +72,13 @@ public abstract class AbstractBlock implements Block {
 
     public int[][] cellsForCurrentRotation() {
         switch (actualRotation) {
-            case 1:
+            case 0:
                 return get0Rotation();
-            case 2:
+            case 1:
                 return get90Rotation();
-            case 3:
+            case 2:
                 return get180Rotation();
-            case 4:
+            case 3:
                 return get270Rotation();
             default:
                 return get0Rotation();
