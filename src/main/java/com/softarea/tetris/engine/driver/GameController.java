@@ -36,7 +36,9 @@ public class GameController {
             }
         };
 
-        Thread thread = new Thread(new PlayLoop());
+        PlayLoop loop = new PlayLoop();
+        loop.setLevel(4);
+        Thread thread = new Thread(loop);
         thread.setUncaughtExceptionHandler(h);
         thread.start();
     }
@@ -104,6 +106,11 @@ public class GameController {
     }
 
     private class PlayLoop implements Runnable {
+        int level = 1;
+
+        public void setLevel(int level) {
+            this.level = level;
+        }
 
         public void run() {
             while (true) {
@@ -111,7 +118,7 @@ public class GameController {
 
                 while (true) {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(1000 / level);
                     } catch (InterruptedException e) {
                     }
 

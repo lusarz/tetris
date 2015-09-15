@@ -14,10 +14,13 @@ public class Board {
 
     private List<int[]> blocks;
 
+    private boolean gameOver;
+
 
     public Board(int width, int height) {
         this.width = width;
         this.height = height;
+        this.gameOver = false;
 
         blocks = new ArrayList<int[]>();
         for (int i = 0; i < height; i++) {
@@ -115,12 +118,15 @@ public class Board {
     }
 
     private void setField(int x, int y, int value) {
-        blocks.get(y)[x] = value;
+        if (y < 0) {
+            gameOver = true;
+        } else {
+            blocks.get(y)[x] = value;
+        }
     }
 
 
     public boolean isGameOver() {
-        //TODO: implement this
-        return false;
+        return gameOver;
     }
 }
