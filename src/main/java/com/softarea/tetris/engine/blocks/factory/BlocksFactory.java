@@ -14,7 +14,6 @@ public class BlocksFactory {
 
     public AbstractBlock next() {
         int kind = Math.abs(random.nextInt() % 7);
-        System.out.println(kind);
 
         switch (kind) {
             case 0:

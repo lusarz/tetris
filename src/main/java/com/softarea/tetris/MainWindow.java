@@ -42,7 +42,9 @@ public class MainWindow extends JFrame {
         statistics.setStatisticsView(new StatisticsInConsoleView());
 
         gameController.setStatistics(statistics);
+
         add(panel);
+        new Thread(panel).start();
         //       add(statisticsPanel);
         addKeyListener(new KeyListener() {
             public void keyTyped(KeyEvent e) {

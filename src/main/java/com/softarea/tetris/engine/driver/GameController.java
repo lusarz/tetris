@@ -5,6 +5,10 @@ import com.softarea.tetris.engine.blocks.Block;
 import com.softarea.tetris.engine.board.Board;
 import com.softarea.tetris.statistics.Statistics;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class GameController {
 
     private Board board;
@@ -29,18 +33,24 @@ public class GameController {
 
         this.drawingApi = drawingApi;
 
-        Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
+        /*Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
             public void uncaughtException(Thread th, Throwable ex) {
                 System.out.println("Uncaught exception: ");
                 ex.printStackTrace();
             }
-        };
+        };*/
 
-        PlayLoop loop = new PlayLoop();
+
+        block = queue.getNextElement();
+
+        PlayLoopTimer timer = new PlayLoopTimer();
+        timer.start();
+
+        /*PlayLoop loop = new PlayLoop();
         loop.setLevel(4);
         Thread thread = new Thread(loop);
         thread.setUncaughtExceptionHandler(h);
-        thread.start();
+        thread.start();*/
     }
 
     public boolean moveDownOrSave() {
@@ -105,7 +115,25 @@ public class GameController {
         statistics.addPoints(lines);
     }
 
-    private class PlayLoop implements Runnable {
+
+    private class PlayLoopTimer extends Timer {
+        public PlayLoopTimer() {
+            super(200, new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    boolean saved = moveDownOrSave();
+                    if (saved) {
+                        int lines = board.removeFullLines();
+                        if (lines > 0) {
+                            addPoints(lines);
+                        }
+                        block = queue.getNextElement();
+                    }
+                }
+            });
+        }
+    }
+
+    /*private class PlayLoop implements Runnable {
         int level = 1;
 
         public void setLevel(int level) {
@@ -136,6 +164,6 @@ public class GameController {
                 }
             }
         }
-    }
+    }*/
 
 }

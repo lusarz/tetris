@@ -6,21 +6,26 @@ import com.softarea.tetris.engine.board.Board;
 import javax.swing.*;
 import java.awt.*;
 
-public class BoardPanel extends JPanel implements DrawingApi {
+public class BoardPanel extends JPanel implements DrawingApi, Runnable {
 
     private static final int OFFSET = 10;
     private static final int SINGLE_BLOCK_SIZE = 20;
 
-    Block block;
-    Board board;
+    private Block block;
+    private Board board;
 
-    Graphics2D graphics2d;
+    private Graphics2D graphics2d;
 
+    private boolean animateEnabled;
+
+    public BoardPanel() {
+        super();
+        animateEnabled = true;
+    }
 
     public void drawGame(Block block, Board board) {
         this.block = block;
         this.board = board;
-        repaint();
     }
 
     public void paint(Graphics g) {
@@ -32,6 +37,7 @@ public class BoardPanel extends JPanel implements DrawingApi {
         paintBoardFilledPoints();
         changeColor(Color.RED);
         paintBlock();
+        Toolkit.getDefaultToolkit().sync();
     }
 
     public void changeColor(Color color) {
@@ -73,4 +79,17 @@ public class BoardPanel extends JPanel implements DrawingApi {
         }
     }
 
+    public void run() {
+        while (true) {
+            //ApplicationContext.getInstance().getMainWindow().repaint();
+            if (animateEnabled) {
+                repaint();
+            }
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }
