@@ -3,13 +3,17 @@ package com.softarea.tetris.engine.driver;
 import com.softarea.tetris.drawing.DrawingApi;
 import com.softarea.tetris.engine.blocks.Block;
 import com.softarea.tetris.engine.board.Board;
+import com.softarea.tetris.engine.listeners.ChangeLevelListener;
 import com.softarea.tetris.statistics.Statistics;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameController {
+
+    private static final int POINTS_PER_LEVEL = 1000;
+
+    private static final int MAX_LEVEL = 12;
 
     private Board board;
 
@@ -21,6 +25,10 @@ public class GameController {
 
     private Statistics statistics;
 
+    private List<ChangeLevelListener> levelListeners = new ArrayList<ChangeLevelListener>();
+
+    private int level;
+
 
     public void setStatistics(Statistics statistics) {
         this.statistics = statistics;
@@ -31,26 +39,14 @@ public class GameController {
         queue = new BlocksQueue();
         block = queue.getNextElement();
 
+        setLevel(4);
+
         this.drawingApi = drawingApi;
 
-        /*Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
-            public void uncaughtException(Thread th, Throwable ex) {
-                System.out.println("Uncaught exception: ");
-                ex.printStackTrace();
-            }
-        };*/
-
-
-        block = queue.getNextElement();
-
-        PlayLoopTimer timer = new PlayLoopTimer();
-        timer.start();
-
-        /*PlayLoop loop = new PlayLoop();
-        loop.setLevel(4);
+        PlayLoop loop = new PlayLoop();
         Thread thread = new Thread(loop);
-        thread.setUncaughtExceptionHandler(h);
-        thread.start();*/
+        thread.start();
+        drawingApi.startDrawing();
     }
 
     public boolean moveDownOrSave() {
@@ -107,38 +103,25 @@ public class GameController {
     }
 
 
-    public void playLoop() {
-
-    }
-
     private void addPoints(int lines) {
+        int pointsBefore = statistics.getPoints();
         statistics.addPoints(lines);
-    }
+        int pointsAfter = statistics.getPoints();
 
 
-    private class PlayLoopTimer extends Timer {
-        public PlayLoopTimer() {
-            super(200, new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    boolean saved = moveDownOrSave();
-                    if (saved) {
-                        int lines = board.removeFullLines();
-                        if (lines > 0) {
-                            addPoints(lines);
-                        }
-                        block = queue.getNextElement();
-                    }
-                }
-            });
+        if ((pointsBefore / 1000) != (pointsAfter / 1000)) {
+            increaseLevel();
         }
     }
 
-    /*private class PlayLoop implements Runnable {
-        int level = 1;
-
-        public void setLevel(int level) {
-            this.level = level;
+    private void increaseLevel() {
+        if (getLevel() < MAX_LEVEL) {
+            setLevel(getLevel() + 1);
         }
+    }
+
+
+    private class PlayLoop implements Runnable {
 
         public void run() {
             while (true) {
@@ -164,6 +147,22 @@ public class GameController {
                 }
             }
         }
-    }*/
+    }
 
+
+    public void registerChangeLevelListener(ChangeLevelListener listener) {
+        levelListeners.add(listener);
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+
+        for (ChangeLevelListener listener : levelListeners) {
+            listener.onChangeLevel(level);
+        }
+    }
 }

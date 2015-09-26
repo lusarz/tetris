@@ -5,8 +5,10 @@ import com.softarea.tetris.engine.board.Board;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class BoardPanel extends JPanel implements DrawingApi, Runnable {
+public class BoardPanel extends JPanel implements DrawingApi {
 
     private static final int OFFSET = 10;
     private static final int SINGLE_BLOCK_SIZE = 20;
@@ -16,12 +18,8 @@ public class BoardPanel extends JPanel implements DrawingApi, Runnable {
 
     private Graphics2D graphics2d;
 
-    private boolean animateEnabled;
-
-    public BoardPanel() {
-        super();
-        animateEnabled = true;
-    }
+    private RepaintTimer repaintTimer;
+    
 
     public void drawGame(Block block, Board board) {
         this.block = block;
@@ -33,14 +31,16 @@ public class BoardPanel extends JPanel implements DrawingApi, Runnable {
 
         graphics2d = (Graphics2D) g;
 
-        paintBoardBorder(board.getWidth(), board.getHeight());
-        paintBoardFilledPoints();
-        changeColor(Color.RED);
-        paintBlock();
+        if (board != null) {
+            paintBoardBorder(board.getWidth(), board.getHeight());
+            paintBoardFilledPoints();
+            changeColor(Color.RED);
+            paintBlock();
+        }
         Toolkit.getDefaultToolkit().sync();
     }
 
-    public void changeColor(Color color) {
+    private void changeColor(Color color) {
         graphics2d.setColor(color);
     }
 
@@ -79,17 +79,21 @@ public class BoardPanel extends JPanel implements DrawingApi, Runnable {
         }
     }
 
-    public void run() {
-        while (true) {
-            //ApplicationContext.getInstance().getMainWindow().repaint();
-            if (animateEnabled) {
-                repaint();
-            }
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+    public void startDrawing() {
+        repaintTimer = new RepaintTimer();
+        repaintTimer.start();
+    }
+
+
+    private class RepaintTimer extends Timer {
+        private static final int REPAINT_INTERVAL = 50;
+
+        public RepaintTimer() {
+            super(REPAINT_INTERVAL, new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    repaint();
+                }
+            });
         }
     }
 }

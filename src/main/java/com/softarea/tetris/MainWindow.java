@@ -2,28 +2,33 @@ package com.softarea.tetris;
 
 import com.softarea.tetris.drawing.BoardPanel;
 import com.softarea.tetris.drawing.DrawingApi;
-import com.softarea.tetris.drawing.statistics.StatisticsInConsoleView;
+import com.softarea.tetris.drawing.statistics.StatisticsPanel;
 import com.softarea.tetris.engine.driver.GameController;
 import com.softarea.tetris.i18n.factory.TranslationsFactory;
 import com.softarea.tetris.menu.MainMenuBar;
 import com.softarea.tetris.statistics.Statistics;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class MainWindow extends JFrame {
 
-    ApplicationContext context;
+    private ApplicationContext context;
 
-    DrawingApi drawingApi;
+    private DrawingApi drawingApi;
 
-    GameController gameController;
+    private GameController gameController;
 
-    Statistics statistics;
+    private Statistics statistics;
+
+    private StatisticsPanel statisticsPanel;
 
 
     public MainWindow() {
+        setLayout(new GridLayout(1, 0));
+        setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         initApplicationContext();
         initGame();
         initUI();
@@ -35,16 +40,18 @@ public class MainWindow extends JFrame {
 
         drawingApi = panel;
         gameController = new GameController();
-        gameController.init(drawingApi);
         statistics = new Statistics();
+        statisticsPanel = new StatisticsPanel(gameController);
 
         //StatisticsPanel statisticsPanel = new StatisticsPanel();
-        statistics.setStatisticsView(new StatisticsInConsoleView());
+        statistics.setStatisticsView(statisticsPanel);
 
         gameController.setStatistics(statistics);
+        gameController.registerChangeLevelListener(statisticsPanel);
 
         add(panel);
-        new Thread(panel).start();
+        add(statisticsPanel);
+        gameController.init(drawingApi);
         //       add(statisticsPanel);
         addKeyListener(new KeyListener() {
             public void keyTyped(KeyEvent e) {
@@ -80,8 +87,9 @@ public class MainWindow extends JFrame {
 
     private void initUI() {
         setTitle(translate("window.title"));
-        setSize(300, 480);
+        setSize(640, 480);
         setLocationRelativeTo(null);
+        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 

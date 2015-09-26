@@ -38,5 +38,6 @@ public class Statistics {
 
     public void setStatisticsView(StatisticsView statisticsView) {
         this.statisticsView = statisticsView;
+        statisticsView.drawPoints(points);
     }
 }
