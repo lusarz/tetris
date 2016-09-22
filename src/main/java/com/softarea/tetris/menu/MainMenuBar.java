@@ -9,15 +9,15 @@ import javax.swing.*;
 
 public class MainMenuBar extends JMenuBar {
 
-    public MainMenuBar() {
-        super();
-        initItems();
-    }
+  public MainMenuBar() {
+    super();
+    initItems();
+  }
 
-    private void initItems() {
-        add(new GameMenu());
-        add(new ViewMenu());
-        add(new ControlMenu());
-        add(new HelpMenu());
-    }
+  private void initItems() {
+    add(new GameMenu());
+    add(new ViewMenu());
+    add(new ControlMenu());
+    add(new HelpMenu());
+  }
 }

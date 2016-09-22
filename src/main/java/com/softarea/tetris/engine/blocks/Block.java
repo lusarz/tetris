@@ -1,39 +1,39 @@
 package com.softarea.tetris.engine.blocks;
 
 public interface Block {
-    void moveDown();
+  void moveDown();
 
-    void moveLeft();
+  void moveLeft();
 
-    void moveRight();
-    
-    void rotateRight();
+  void moveRight();
 
-    void rotateLeft();
+  void rotateRight();
 
-    int getWidth();
+  void rotateLeft();
 
-    int getHeight();
+  int getWidth();
 
-    int getField(int x, int y);
+  int getHeight();
 
-    int getX();
+  int getField(int x, int y);
 
-    int getY();
+  int getX();
 
-    BlockMemento save();
+  int getY();
 
-    void undo(BlockMemento memento);
+  BlockMemento save();
 
-    class BlockMemento {
-        protected int x;
-        protected int y;
-        protected int actualRotation;
+  void undo(BlockMemento memento);
 
-        public BlockMemento(int x, int y, int actualRotation) {
-            this.x = x;
-            this.y = y;
-            this.actualRotation = actualRotation;
-        }
+  class BlockMemento {
+    protected int x;
+    protected int y;
+    protected int actualRotation;
+
+    public BlockMemento(int x, int y, int actualRotation) {
+      this.x = x;
+      this.y = y;
+      this.actualRotation = actualRotation;
     }
+  }
 }

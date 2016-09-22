@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class FullScreenListener implements ActionListener {
-    public void actionPerformed(ActionEvent e) {
-        ApplicationContext.getInstance().getMainWindow().setExtendedState(JFrame.MAXIMIZED_BOTH);
-    }
+  public void actionPerformed(ActionEvent e) {
+    ApplicationContext.getInstance().getMainWindow().setExtendedState(JFrame.MAXIMIZED_BOTH);
+  }
 }

@@ -6,32 +6,32 @@ import java.util.Random;
 
 public class BlocksFactory {
 
-    Random random;
+  Random random;
 
-    public BlocksFactory() {
-        random = new Random();
+  public BlocksFactory() {
+    random = new Random();
+  }
+
+  public AbstractBlock next() {
+    int kind = Math.abs(random.nextInt() % 7);
+
+    switch (kind) {
+      case 0:
+        return new LBlock();
+      case 1:
+        return new LMirroredBlock();
+      case 2:
+        return new SBlock();
+      case 3:
+        return new SquareBlock();
+      case 4:
+        return new StraightBlock();
+      case 5:
+        return new TBlock();
+      case 6:
+        return new ZBlock();
+      default:
+        return new TBlock();
     }
-
-    public AbstractBlock next() {
-        int kind = Math.abs(random.nextInt() % 7);
-
-        switch (kind) {
-            case 0:
-                return new LBlock();
-            case 1:
-                return new LMirroredBlock();
-            case 2:
-                return new SBlock();
-            case 3:
-                return new SquareBlock();
-            case 4:
-                return new StraightBlock();
-            case 5:
-                return new TBlock();
-            case 6:
-                return new ZBlock();
-            default:
-                return new TBlock();
-        }
-    }
+  }
 }

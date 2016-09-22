@@ -6,127 +6,127 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    private static int DEFAULT_WIDTH = 10;
-    private static int DEFAULT_HEIGHT = 20;
+  private static int DEFAULT_WIDTH = 10;
+  private static int DEFAULT_HEIGHT = 20;
 
-    private int width;
-    private int height;
+  private int width;
+  private int height;
 
-    private List<int[]> blocks;
+  private List<int[]> blocks;
 
-    private boolean gameOver;
+  private boolean gameOver;
 
 
-    public Board(int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.gameOver = false;
+  public Board(int width, int height) {
+    this.width = width;
+    this.height = height;
+    this.gameOver = false;
 
-        blocks = new ArrayList<int[]>();
-        for (int i = 0; i < height; i++) {
-            blocks.add(new int[width]);
+    blocks = new ArrayList<int[]>();
+    for (int i = 0; i < height; i++) {
+      blocks.add(new int[width]);
+    }
+  }
+
+  public Board() {
+    this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+  }
+
+
+  public boolean checkCollision(Block block) {
+    return (checkBorderCollision(block) || checkPointsCollision(block));
+  }
+
+
+  public void saveBlock(Block block) {
+    for (int i = 0; i < block.getWidth(); i++) {
+      for (int j = 0; j < block.getHeight(); j++) {
+        int value = block.getField(i, j);
+        if (value != 0) {
+          setField(block.getX() + i, block.getY() + j, value);
         }
+      }
     }
+  }
 
-    public Board() {
-        this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+  public int removeFullLines() {
+    int linesCount = 0;
+
+    for (int j = 0; j < height; j++) {
+      if (isLineFull(j)) {
+        linesCount++;
+        removeLine(j);
+      }
     }
+    return linesCount;
+  }
 
+  public int getWidth() {
+    return width;
+  }
 
-    public boolean checkCollision(Block block) {
-        return (checkBorderCollision(block) || checkPointsCollision(block));
+  public int getHeight() {
+    return height;
+  }
+
+  public int getField(int x, int y) {
+    if (y < 0) {
+      return 0;
     }
+    return blocks.get(y)[x];
+  }
+
+  private boolean checkBorderCollision(Block block) {
+    boolean isLeftCollision = (block.getX() < 0);
+    boolean isRightCollision = (block.getX() + block.getWidth() > width);
+    boolean isDownCollision = (block.getY() + block.getHeight() > height);
+
+    return (isLeftCollision || isRightCollision || isDownCollision);
+  }
+
+  private boolean checkPointsCollision(Block block) {
+    for (int i = 0; i < block.getWidth(); i++) {
+      for (int j = 0; j < block.getHeight(); j++) {
+        int blockValue = block.getField(i, j);
 
 
-    public void saveBlock(Block block) {
-        for (int i = 0; i < block.getWidth(); i++) {
-            for (int j = 0; j < block.getHeight(); j++) {
-                int value = block.getField(i, j);
-                if (value != 0) {
-                    setField(block.getX() + i, block.getY() + j, value);
-                }
-            }
+        int boardValue = getField(block.getX() + i, block.getY() + j);
+
+        if ((blockValue > 0) && (boardValue > 0)) {
+          return true;
         }
+      }
     }
+    return false;
+  }
 
-    public int removeFullLines() {
-        int linesCount = 0;
+  private void removeLine(int lineNumber) {
+    blocks.remove(lineNumber);
+    blocks.add(0, new int[getWidth()]);
+  }
 
-        for (int j = 0; j < height; j++) {
-            if (isLineFull(j)) {
-                linesCount++;
-                removeLine(j);
-            }
-        }
-        return linesCount;
+  private boolean isLineFull(int lineNumber) {
+    boolean lineFull = true;
+    for (int i = 0; i < width; i++) {
+      int fieldValue = getField(i, lineNumber);
+      if (fieldValue == 0) {
+        lineFull = false;
+        break;
+      }
     }
+    return lineFull;
+  }
 
-    public int getWidth() {
-        return width;
+  private void setField(int x, int y, int value) {
+    if (y < 0) {
+      gameOver = true;
+    } else {
+      blocks.get(y)[x] = value;
     }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public int getField(int x, int y) {
-        if (y < 0) {
-            return 0;
-        }
-        return blocks.get(y)[x];
-    }
-
-    private boolean checkBorderCollision(Block block) {
-        boolean isLeftCollision = (block.getX() < 0);
-        boolean isRightCollision = (block.getX() + block.getWidth() > width);
-        boolean isDownCollision = (block.getY() + block.getHeight() > height);
-
-        return (isLeftCollision || isRightCollision || isDownCollision);
-    }
-
-    private boolean checkPointsCollision(Block block) {
-        for (int i = 0; i < block.getWidth(); i++) {
-            for (int j = 0; j < block.getHeight(); j++) {
-                int blockValue = block.getField(i, j);
+  }
 
 
-                int boardValue = getField(block.getX() + i, block.getY() + j);
-
-                if ((blockValue > 0) && (boardValue > 0)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private void removeLine(int lineNumber) {
-        blocks.remove(lineNumber);
-        blocks.add(0, new int[getWidth()]);
-    }
-
-    private boolean isLineFull(int lineNumber) {
-        boolean lineFull = true;
-        for (int i = 0; i < width; i++) {
-            int fieldValue = getField(i, lineNumber);
-            if (fieldValue == 0) {
-                lineFull = false;
-                break;
-            }
-        }
-        return lineFull;
-    }
-
-    private void setField(int x, int y, int value) {
-        if (y < 0) {
-            gameOver = true;
-        } else {
-            blocks.get(y)[x] = value;
-        }
-    }
-
-
-    public boolean isGameOver() {
-        return gameOver;
-    }
+  public boolean isGameOver() {
+    return gameOver;
+  }
 }

@@ -5,7 +5,7 @@ import com.softarea.tetris.engine.board.Board;
 
 public interface DrawingApi {
 
-    void drawGame(Block block, Board board);
+  void drawGame(Block block, Board board);
 
-    void startDrawing();
+  void startDrawing();
 }
